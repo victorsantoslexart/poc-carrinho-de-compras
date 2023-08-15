@@ -9,8 +9,6 @@
   "engineStrict": true,
   "private": true,
   "scripts": {
-    "db:reset": "npx sequelize-cli db:drop && npx sequelize-cli db:create && npx sequelize-cli db:migrate && npx sequelize-cli db:seed:all",
-    "prestart": "npm run db:reset",
     "start": "node .",
     "dev": "nodemon .",
     "test": "mocha src/tests/**/*$NAME*.test.js --exit",
@@ -19,12 +17,13 @@
     "lint": "eslint --no-inline-config --no-error-on-unmatched-pattern -c .eslintrc.json ."
   },
   "dependencies": {
+    "@google-cloud/datastore": "^8.0.0",
     "cors": "2.8.5",
     "dotenv": "16.0.0",
     "express": "4.17.3",
+    "firebase-admin": "^11.10.1",
     "pg": "^8.11.2",
-    "pg-hstore": "^2.3.4",
-    "sequelize": "6.17.0"
+    "pg-hstore": "^2.3.4"
   },
   "devDependencies": {
     "chai": "4.3.6",
@@ -32,7 +31,6 @@
     "mocha": "9.2.2",
     "nodemon": "2.0.15",
     "nyc": "15.1.0",
-    "sequelize-cli": "6.4.1",
     "sinon": "13.0.1"
   }
 }
