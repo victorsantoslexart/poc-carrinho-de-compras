@@ -1,13 +1,18 @@
-const admin = require("firebase-admin");
+const { initializeApp, applicationDefault, cert } = require('firebase-admin/app');
+const { getFirestore, Timestamp, FieldValue, Filter } = require('firebase-admin/firestore');
+
+
 const serviceAccount = require("../../serviceAccountKey.json");
 
-admin.initializeApp({
-  credential: admin.credential.cert(serviceAccount)
+
+initializeApp({
+  credential: cert(serviceAccount)
 });
 
+const db = getFirestore();
 
 const getProducts = async (_req, res) => {
-	admin.firestore()
+	db
 		.collection('products')
 		.get()
 		.then(snapshot => {
@@ -15,7 +20,7 @@ const getProducts = async (_req, res) => {
 				uid: doc.id,
 				...doc.data()
 			}));
-      
+
 			res.json(transactions)
 		})
 }
