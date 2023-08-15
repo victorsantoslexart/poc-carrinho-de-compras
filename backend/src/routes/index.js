@@ -1,25 +1,12 @@
 const express = require('express');
 const errorMiddleware = require('../middleware/ErrorMiddleware');
-const admin = require("firebase-admin");
-const serviceAccount = require("../../serviceAccountKey.json");
+const { getProducts } = require('../controller/products');
+
 
 const router = express();
 
-admin.initializeApp({
-  credential: admin.credential.cert(serviceAccount)
-});
 
-router.use('/products', async (req, res) => {
-	admin.firestore()
-		.collection('products')
-		.get()
-		.then(snapshot => {
-			const transactions = snapshot.docs.map((doc) => ({
-				...doc.data()
-			}));
-			res.json(transactions)
-		})
-});
+router.get('/products', getProducts);
 router.use(errorMiddleware);
 
 module.exports = router;
